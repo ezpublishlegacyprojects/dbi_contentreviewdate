@@ -1,0 +1,67 @@
+=================================
+DBI Content Review Date extension
+=================================
+
+DB Informatics
+www.dbinformatics.com.au
+info@dbinformatics.com.au
+
+----------------------------
+The DBI Content Review Date extension allows a review date to be set for 
+specific content objects.  When this date is reached an alert email will
+be sent to both the owner and the last modifier.
+----------------------------
+
+
+License
+-------
+
+Certain parts of this extension are based on the hide cronjob that is
+delivered with eZ publish by default.
+
+Usage
+-----
+
+Configuration is similar to the configuration of the hide cronjob. Use the
+[ReviewNotification] group in dbi_contentreviewdate.ini and consult the
+following resources for more information:
+
+- http://ez.no/doc/ez_publish/technical_manual/3_9/features/cronjobs/the_cronjob_scripts#hide
+- http://ez.no/doc/ez_publish/technical_manual/3_9/reference/configuration_files/content_ini/hidesettings
+
+Also set up a cron to fire each day, something like:
+40 6 * * * www-data cd /var/www/yoursite; /usr/bin/php runcronjobs.php -q contentreviewnotifiy 2>&1 > /dev/null
+
+Besides the different group name, the HideDateAttributeList setting has also
+been renamed to ReviewDateAttributeList.
+
+The contentreviewnotify cronjob script will check the specified objects and
+send out an e-mail to both the owner and the last modifier. If one of them
+does not exist anymore on the site or is disabled, the e-mail will also be
+sent to the fallback e-mail address specified by the [ReviewNotification]
+FallbackEmail setting.
+
+The template used to provide the body for the e-mail is located at
+design/standard/templates/cronjobs/contentreviewnotify.tpl. The template
+receives a variable called "node". If you set a variable named 'subject' in
+the root namespace of the template, then it will be used as the subject of
+the e-mail. Otherwise a default subject "Content review needed" will be used
+instead.
+
+
+Example code to set a custom subject:
+
+{set scope=root $subject=concat($node.class_name, ' is due for review')}
+or
+{set-block scope=root variable=subject}{$node.class_name} is due for review{/set-block}
+
+The following override conditions are available to override the mail template:
+
+- object: ID of the object
+- node: ID of the node
+- parent_node: ID of the parent node
+- class: ID of the content class of the object
+- class_identifier: identifier of the content class of the object
+- depth: depth of the node
+- url_alias: URL alias of the node
+- class_group: ID of the class group
