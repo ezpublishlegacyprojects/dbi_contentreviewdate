@@ -3,7 +3,7 @@
 [CronjobSettings]
 ExtensionDirectories[]=dbi_contentreviewdate
 
-[CronjobPart-contentreviewnotifiy]
+[CronjobPart-contentreviewnotify]
 Scripts[]
 Scripts[]=contentreviewnotify.php
 

@@ -30,7 +30,7 @@ following resources for more information:
 - http://ez.no/doc/ez_publish/technical_manual/3_9/reference/configuration_files/content_ini/hidesettings
 
 Also set up a cron to fire each day, something like:
-40 6 * * * www-data cd /var/www/yoursite; /usr/bin/php runcronjobs.php -q contentreviewnotifiy 2>&1 > /dev/null
+40 6 * * * www-data cd /var/www/yoursite; /usr/bin/php runcronjobs.php -q contentreviewnotify 2>&1 > /dev/null
 
 Besides the different group name, the HideDateAttributeList setting has also
 been renamed to ReviewDateAttributeList.
